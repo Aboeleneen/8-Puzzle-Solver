@@ -1,52 +1,50 @@
-package main.java.DFS_solver;
+package DFS_solver;
 
 import java.util.ArrayList;
 
 public class State {
-    public int[] tiles;
+    public String tiles;
     public State prevState = null;
 
-    public State(int[] tiles) {
+    public State(String tiles) {
         this.tiles = tiles;
         prevState = null;
     }
 
     public ArrayList<State> get_neighbors() {
-        int emptyIndex = 0;
-        for (int i = 0; i < this.tiles.length; ++i) {
-            if (this.tiles[i] == 0) {
-                emptyIndex = i;
-            }
-        }
+        int emptyIndex = this.tiles.indexOf('0');
+
         ArrayList<State> adjecents = new ArrayList<State>();
-        // move blank cell top
-        if (emptyIndex - 3 >= 0) {
-            int[] adjecentTiles = this.tiles.clone();
-            adjecentTiles[emptyIndex] = adjecentTiles[emptyIndex - 3];
-            adjecentTiles[emptyIndex - 3] = 0;
-            adjecents.add(new State(adjecentTiles));
+        // top cell
+        if (emptyIndex > 2) {
+            StringBuilder adjecentTiles = new StringBuilder(this.tiles);
+            adjecentTiles.setCharAt(emptyIndex,adjecentTiles.charAt(emptyIndex - 3));
+            adjecentTiles.setCharAt(emptyIndex - 3, '0');
+            adjecents.add(new State(adjecentTiles.toString()));
         }
+         // move blank cell left
+         if (emptyIndex % 3 > 0) {
+            StringBuilder adjecentTiles = new StringBuilder(this.tiles);
+            adjecentTiles.setCharAt(emptyIndex,adjecentTiles.charAt(emptyIndex - 1));
+            adjecentTiles.setCharAt(emptyIndex - 1, '0');
+            adjecents.add(new State(adjecentTiles.toString()));
+        }
+        
         // move blank cell bottom
-        if (emptyIndex + 3 <= 8) {
-            int[] adjecentTiles = this.tiles.clone();
-            adjecentTiles[emptyIndex] = adjecentTiles[emptyIndex + 3];
-            adjecentTiles[emptyIndex + 3] = 0;
-            adjecents.add(new State(adjecentTiles));
+        if (emptyIndex < 6) {
+            StringBuilder adjecentTiles = new StringBuilder(this.tiles);
+            adjecentTiles.setCharAt(emptyIndex, adjecentTiles.charAt(emptyIndex + 3));
+            adjecentTiles.setCharAt(emptyIndex + 3, '0');
+            adjecents.add(new State(adjecentTiles.toString()));
         }
-        // move blank cell left
-        if (emptyIndex % 3 > 0) {
-            int[] adjecentTiles = this.tiles.clone();
-            adjecentTiles[emptyIndex] = adjecentTiles[emptyIndex - 1];
-            adjecentTiles[emptyIndex - 1] = 0;
-            adjecents.add(new State(adjecentTiles));
-        }
+       
 
         // move blank cell right
         if (emptyIndex % 3 < 2) {
-            int[] adjecentTiles = this.tiles.clone();
-            adjecentTiles[emptyIndex] = adjecentTiles[emptyIndex + 1];
-            adjecentTiles[emptyIndex + 1] = 0;
-            adjecents.add(new State(adjecentTiles));
+            StringBuilder adjecentTiles = new StringBuilder(this.tiles);
+            adjecentTiles.setCharAt(emptyIndex, adjecentTiles.charAt(emptyIndex + 1));
+            adjecentTiles.setCharAt(emptyIndex + 1, '0');
+            adjecents.add(new State(adjecentTiles.toString()));
         }
         return adjecents;
     }

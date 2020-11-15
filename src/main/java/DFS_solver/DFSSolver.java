@@ -1,74 +1,48 @@
-package main.java.DFS_solver;
+package DFS_solver;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.Stack;
 
 public class DFSSolver {
     private State goal_state;
     private Stack<State> frontier;
-    private ArrayList<State> explored;
+    private HashSet<String> explored;
 
     public DFSSolver(State goal_state) {
         this.goal_state = goal_state;
         this.frontier = new Stack<State>();
-        this.explored = new ArrayList<>();
+        this.explored = new HashSet<>();
     }
 
     public State solve(State initial_state) {
         this.frontier.push(initial_state);
+
+        HashSet<String> frontierTiles = new HashSet<>();
+        frontierTiles.add(initial_state.tiles);
+
         while (!this.frontier.empty()) {
             State state = frontier.pop();
-            this.explored.add(state);
-            if (this.similarStates(state, this.goal_state)) {
+            frontierTiles.remove(state.tiles);
+
+            this.explored.add(state.tiles);
+
+            if (state.tiles.equals(this.goal_state.tiles)) {
+                System.out.println("Success");
+                this.goal_state = state;
                 break;
             }
-            this.printState(state);
+
             ArrayList<State> neighbors = state.get_neighbors();
-            System.out.println(neighbors.size());
             for (int i = 0; i < neighbors.size(); ++i) {
-                if (!this.IsStateExistInExpored(neighbors.get(i)) && !this.IsStateExistInFronteir(neighbors.get(i))) {
+                String neighborTiles = neighbors.get(i).tiles;
+                if (!this.explored.contains(neighborTiles) && !frontierTiles.contains(neighborTiles)) {
                     neighbors.get(i).prevState = state;
                     frontier.push(neighbors.get(i));
+                    frontierTiles.add(neighborTiles);
                 }
             }
         }
         return this.goal_state;
-    }
-
-    private boolean similarStates(State state1, State state2) {
-        for (int i = 0; i < state1.tiles.length; ++i) {
-            if (state1.tiles[i] != state2.tiles[i]) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean IsStateExistInFronteir(State state) {
-        Iterator<State> iterator = this.frontier.iterator();
-        while (iterator.hasNext()) {
-            if (this.similarStates(state, iterator.next())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean IsStateExistInExpored(State state) {
-        for (int i = 0; i < this.explored.size(); ++i) {
-            if (this.similarStates(state, this.explored.get(i))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void printState(State state) {
-        System.out.print("state on the path: ");
-        for (int j = 0; j < 9; ++j) {
-            System.out.print(state.tiles[j] + ", ");
-        }
-        System.out.println("");
     }
 }
