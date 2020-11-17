@@ -15,7 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import DFS_solver.State;
-import BFS_Solver.BFSSolver;
+import BFS_solver.BFSSolver;
 import java.io.IOException;
 import java.util.Stack;
 import javafx.fxml.FXMLLoader;
