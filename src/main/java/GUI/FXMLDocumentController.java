@@ -68,6 +68,7 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        tile1.setText("9");
     }    
     
     public void change_scene(ActionEvent event ,  Stack<State> moves) throws IOException{
