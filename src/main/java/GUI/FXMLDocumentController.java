@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package solver;
+package GUI;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,9 +16,11 @@ import javafx.scene.control.TextField;
 
 import DFS_solver.State;
 import DFS_solver.DFSSolver;
-import BFS_Solver.BFSSolver;
+import BFS_solver.BFSSolver;
 import java.io.IOException;
 import java.util.Stack;
+
+import AStar_solver.AStarSolver;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -58,37 +60,37 @@ public class FXMLDocumentController implements Initializable {
         
         String tiles = "012345678";
         String selected_algorithm = (String) choiceBox.getValue();
-        Stack<State> moves = new Stack<>() ;
+        Stack<String> moves = new Stack<>() ;
         switch (selected_algorithm) {
             case "BFS":{
                 BFSSolver solver = new BFSSolver(new State(tiles));
                 solver.solve(new State(inital_state));
-                moves= solver.get_moves();
+                moves = solver.get_path();
                     break;
                 }
             case "DFS":{
                 DFSSolver solver = new DFSSolver(new State(tiles));
                 solver.solve(new State(inital_state));
-                moves= solver.get_moves();
+                moves= solver.get_path();
                     break;
                 }
             case "AStar-Manhattan":{
-                AStarSolver solver = new AStarSolver(new State(tiles) , "AStar-Manhattan");
+                AStarSolver solver = new AStarSolver(new State(tiles) , "Manhattan");
                 solver.solve(new State(inital_state));
-                moves= solver.get_moves();
+                moves= solver.get_path();
                     break;
                 } 
             case "AStar-Euclidean":{
-                AStarSolver solver = new AStarSolver(new State(tiles) , "AStar-Euclidean");
+                AStarSolver solver = new AStarSolver(new State(tiles) , "Euclidean");
                 solver.solve(new State(inital_state));
-                moves= solver.get_moves();
+                moves= solver.get_path();
                     break;
                 }
             default:
                 break;
         }
         System.out.println("Path cost: " + (moves.size() - 1));
-        change_scene(event , moves);
+        change_scene(event , moves, inital_state);
         
     }
     
@@ -102,14 +104,14 @@ public class FXMLDocumentController implements Initializable {
         choiceBox.getSelectionModel().select("BFS");
     }    
     
-    public void change_scene(ActionEvent event ,  Stack<State> moves) throws IOException{
+    public void change_scene(ActionEvent event ,  Stack<String> moves, String initial_state) throws IOException{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("Solution.fxml"));
         Parent newView = loader.load();
         
         // pass information to waitingCustomers scene
         SolutionController controller = loader.getController();
-        controller.set_moves(moves);
+        controller.set_moves(moves, initial_state);
         
         Scene scene = new Scene(newView);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

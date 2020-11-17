@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="451.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="solver.SolutionController">
+<AnchorPane id="AnchorPane" prefHeight="451.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="GUI.SolutionController">
    <children>
       <Label layoutX="179.0" layoutY="15.0" prefHeight="35.0" prefWidth="146.0" text="# Moves : " textFill="#d30c0c">
          <font>

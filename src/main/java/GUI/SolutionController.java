@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package solver;
+package GUI;
 
-import DFS_solver.State;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class SolutionController implements Initializable {
     @FXML private Label moves_label ;
     @FXML private Text steps_label ;
     
-    private ArrayList<State> moves ;
+    private ArrayList<String> moves ;
     private int step = 0 ;
     
     @Override
@@ -54,20 +53,27 @@ public class SolutionController implements Initializable {
      
     }
     
-    public void set_moves(Stack<State> sol){
+    public void set_moves(Stack<String> sol, String initial_state){
         moves = new ArrayList<>();
         while(!sol.isEmpty())
         {
-            State move = sol.pop();
-            System.out.println(move);
+            String move = sol.pop();
+            // System.out.println(move);
             this.moves.add(move);
         }
-        moves_label.setText(Integer.toString(this.moves.size()-1));
+        if(moves.size() > 1){
+            moves_label.setText(Integer.toString(this.moves.size()-1));
+        }
+        else{
+            moves_label.setText("None");
+            this.moves.set(0, initial_state);
+        }
         set_tiles();
+        
     }
     
     private void set_tiles(){
-        String tiles = moves.get(step).tiles;
+        String tiles = moves.get(step);
         tile1.setText(Character.toString(tiles.charAt(0)));
         tile2.setText(Character.toString(tiles.charAt(1)));
         tile3.setText(Character.toString(tiles.charAt(2)));
