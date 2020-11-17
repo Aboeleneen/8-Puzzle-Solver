@@ -52,7 +52,7 @@ public class SolutionController implements Initializable {
         while(!sol.isEmpty())
         {
             String move = sol.pop();
-            System.out.println(move);
+            // System.out.println(move);
             this.moves.add(move);
         }
         moves_label.setText(Integer.toString(this.moves.size()-1));

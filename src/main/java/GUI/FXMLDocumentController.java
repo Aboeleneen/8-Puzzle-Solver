@@ -57,12 +57,11 @@ public class FXMLDocumentController implements Initializable {
         inital_state+=tile8.getText();
         inital_state+=tile9.getText();
         
-        System.err.println(inital_state);
         String tiles = "012345678";
-        // Solver solver = new BFSSolver(new State(tiles));
+        Solver solver = new BFSSolver(new State(tiles));
         // Solver solver = new DFSSolver(new State(tiles));
         // Solver solver = new AStarSolver(new State(tiles), "Manhattan");
-        Solver solver = new AStarSolver(new State(tiles), "Euclidean");
+        // Solver solver = new AStarSolver(new State(tiles), "Manhattan");
         solver.solve(new State(inital_state));
         Stack<String> moves = solver.get_path(); 
         System.out.println("Path cost: " + (moves.size() - 1));

@@ -24,6 +24,7 @@ public class BFSSolver extends Solver {
             State current_state = frontier.remove();
 
             if (current_state.tiles.equals(this.goal_state.tiles)) {
+                System.out.println("Number of nodes expanded: " + (explored.size() - frontier.size()));
                 this.goal_state = current_state;
                 break;
             }

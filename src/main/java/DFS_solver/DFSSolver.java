@@ -25,6 +25,7 @@ public class DFSSolver extends Solver {
             explored.add(state.tiles);
 
             if (state.tiles.equals(this.goal_state.tiles)) {
+                System.out.println("Number of nodes expanded: " + explored.size());
                 this.goal_state = state;
                 break;
             }
