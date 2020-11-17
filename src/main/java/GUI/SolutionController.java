@@ -5,7 +5,6 @@
  */
 package GUI;
 
-import DFS_solver.State;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ public class SolutionController implements Initializable {
     @FXML private Label moves_label ;
     @FXML private Text steps_label ;
     
-    private ArrayList<State> moves ;
+    private ArrayList<String> moves ;
     private int step = 0 ;
     
     @Override
@@ -48,11 +47,11 @@ public class SolutionController implements Initializable {
      // TODO
     }
     
-    public void set_moves(Stack<State> sol){
+    public void set_moves(Stack<String> sol){
         moves = new ArrayList<>();
         while(!sol.isEmpty())
         {
-            State move = sol.pop();
+            String move = sol.pop();
             System.out.println(move);
             this.moves.add(move);
         }
@@ -61,7 +60,7 @@ public class SolutionController implements Initializable {
     }
     
     private void set_tiles(){
-        String tiles = moves.get(step).tiles;
+        String tiles = moves.get(step);
         tile1.setText(Character.toString(tiles.charAt(0)));
         tile2.setText(Character.toString(tiles.charAt(1)));
         tile3.setText(Character.toString(tiles.charAt(2)));

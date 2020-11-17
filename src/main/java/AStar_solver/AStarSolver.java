@@ -6,47 +6,49 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class AStarSolver {
-    private AStarState goal_state;
-    private ArrayList<String> heuristic_types;
+import DFS_solver.Solver;
+import DFS_solver.State;
 
-    public AStarSolver(AStarState goal_state) {
-        this.goal_state = goal_state;
+public class AStarSolver extends Solver{
+    private ArrayList<String> heuristic_types;
+    private String heuristic_type;
+
+    public AStarSolver(State goal_state, String heuristic_type) {
+        super(goal_state);
         heuristic_types = new ArrayList<String>(List.of("Manhattan", "Euclidean"));
+        this.heuristic_type = heuristic_type;
     }
 
-    public AStarState solve(AStarState initial_state, String heuristic_type) {
-        if(!this.heuristic_types.contains(heuristic_type)){
+    public void solve(State initial_state) {
+        if(!this.heuristic_types.contains(this.heuristic_type)){
             System.out.println("invalide heuristic method");
-            return null;
+            return ;
         }
-        PriorityQueue<AStarState> frontier = new PriorityQueue<AStarState>(9, new StateComparator());
+        PriorityQueue<State> frontier = new PriorityQueue<State>(9, new StateComparator());
         HashSet<String> frontierTiles = new HashSet<>();
         HashSet<String> explored = new HashSet<>();
 
         initial_state.costFromInitial = 0;
-        initial_state.estimateToGoal = getHeuristicDistance(initial_state.tiles, heuristic_type);
+        initial_state.estimateToGoal = getHeuristicDistance(initial_state.tiles, this.heuristic_type);
 
         frontier.add(initial_state);
         frontierTiles.add(initial_state.tiles);
 
         while (frontier.size() != 0) {
-            AStarState state = frontier.poll();
+            State state = frontier.poll();
             frontierTiles.remove(state.tiles);
 
             explored.add(state.tiles);
 
             if (state.tiles.equals(this.goal_state.tiles)) {
-                System.out.println("Success");
-                System.out.println("number of expored states: " + explored.size());
-                this.goal_state = state;
+                super.goal_state = state;
                 break;
             }
 
-            ArrayList<AStarState> neighbors = state.getNeighbors();
+            ArrayList<State> neighbors = state.get_neighbors();
 
             for (int i = 0; i < neighbors.size(); ++i) {
-                AStarState neighbor = neighbors.get(i);
+                State neighbor = neighbors.get(i);
                 if (!explored.contains(neighbor.tiles) && !frontierTiles.contains(neighbor.tiles)) {
                     neighbor.prevState = state;
                     neighbor.costFromInitial = state.costFromInitial + 1;
@@ -62,7 +64,6 @@ public class AStarSolver {
                 }
             }
         }
-        return this.goal_state;
     }
 
     private double getHeuristicDistance(String currectTiles, String heuristic_type){
@@ -98,9 +99,9 @@ public class AStarSolver {
         return distance;
     }
 
-    class StateComparator implements Comparator<AStarState> {
+    class StateComparator implements Comparator<State> {
         @Override
-        public int compare(AStarState s1, AStarState s2) {
+        public int compare(State s1, State s2) {
             double s1Fun = s1.costFromInitial + s1.estimateToGoal;
             double s2Fun = s2.costFromInitial + s2.estimateToGoal;
             if (s1Fun > s2Fun)
