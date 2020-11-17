@@ -6,8 +6,7 @@
 ### Compiling and Running the project
 Open the terminal and run: 
 - `mvn compile`
-- `mvn package`
-- `java -jar target/8-puzzle-solver-0.1.0.jar`
+- `mvn javafx:run`
 
 ### Resources
 - [Building Java Projects with Maven](https://spring.io/guides/gs/maven/)
