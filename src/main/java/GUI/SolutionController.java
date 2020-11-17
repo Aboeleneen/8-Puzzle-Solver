@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package solver;
+package GUI;
 
 import DFS_solver.State;
 import java.io.IOException;
@@ -89,17 +89,6 @@ public class SolutionController implements Initializable {
     private void handleNext(ActionEvent event) throws IOException {
         this.step = Math.min(moves.size()-1, step+1);
         set_tiles();
-    }
-    
-    @FXML
-    private void handleNew(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("FXMLDocument.fxml"));
-        Parent newView = loader.load();
-        Scene scene = new Scene(newView);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
     }
     
 }

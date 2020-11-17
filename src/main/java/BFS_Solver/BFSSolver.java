@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package BFS_Solver;
+package BFS_solver;
 
 import DFS_solver.State ;
 import java.util.ArrayList;
