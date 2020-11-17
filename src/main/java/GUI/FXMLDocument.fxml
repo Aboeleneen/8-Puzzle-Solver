@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="472.0" prefWidth="518.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="solver.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="472.0" prefWidth="518.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="GUI.FXMLDocumentController">
     <children>
         <Button fx:id="button" layoutX="389.0" layoutY="418.0" onAction="#handleSolve" text="Solve">
          <font>
