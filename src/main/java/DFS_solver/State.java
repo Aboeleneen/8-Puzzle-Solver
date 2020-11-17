@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class State {
     public String tiles;
     public State prevState = null;
+    public int costFromInitial;
+    public double estimateToGoal;
 
     public State(String tiles) {
         this.tiles = tiles;
