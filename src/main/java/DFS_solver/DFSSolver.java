@@ -40,5 +40,10 @@ public class DFSSolver extends Solver {
                 }
             }
         }
+        if (frontier.size() == 0) {
+            System.out.println("Failure: No Solution");
+            System.out.println("Number of nodes expanded: " + explored.size());
+        }
     }
+    
 }

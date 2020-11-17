@@ -12,10 +12,15 @@ import java.util.ResourceBundle;
 import java.util.Stack;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -45,9 +50,10 @@ public class SolutionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
      // TODO
+     
     }
     
-    public void set_moves(Stack<String> sol){
+    public void set_moves(Stack<String> sol, String initial_state){
         moves = new ArrayList<>();
         while(!sol.isEmpty())
         {
@@ -55,8 +61,15 @@ public class SolutionController implements Initializable {
             // System.out.println(move);
             this.moves.add(move);
         }
-        moves_label.setText(Integer.toString(this.moves.size()-1));
+        if(moves.size() > 1){
+            moves_label.setText(Integer.toString(this.moves.size()-1));
+        }
+        else{
+            moves_label.setText("None");
+            this.moves.set(0, initial_state);
+        }
         set_tiles();
+        
     }
     
     private void set_tiles(){
@@ -83,6 +96,17 @@ public class SolutionController implements Initializable {
     private void handleNext(ActionEvent event) throws IOException {
         this.step = Math.min(moves.size()-1, step+1);
         set_tiles();
+    }
+    
+    @FXML
+    private void handleNew(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("FXMLDocument.fxml"));
+        Parent newView = loader.load();
+        Scene scene = new Scene(newView);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
     
 }

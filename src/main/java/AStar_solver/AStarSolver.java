@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 import DFS_solver.Solver;
 import DFS_solver.State;
 
-public class AStarSolver extends Solver{
+public class AStarSolver extends Solver {
     private ArrayList<String> heuristic_types;
     private String heuristic_type;
 
@@ -20,9 +20,9 @@ public class AStarSolver extends Solver{
     }
 
     public void solve(State initial_state) {
-        if(!this.heuristic_types.contains(this.heuristic_type)){
+        if (!this.heuristic_types.contains(this.heuristic_type)) {
             System.out.println("invalide heuristic method");
-            return ;
+            return;
         }
         PriorityQueue<State> frontier = new PriorityQueue<State>(9, new StateComparator());
         HashSet<String> frontierTiles = new HashSet<>();
@@ -56,8 +56,8 @@ public class AStarSolver extends Solver{
                     neighbor.estimateToGoal = getHeuristicDistance(initial_state.tiles, heuristic_type);
                     frontier.add(neighbor);
                     frontierTiles.add(neighbor.tiles);
-                }else if(frontierTiles.contains(neighbor.tiles)){
-                    if(neighbor.costFromInitial > state.costFromInitial + 1){
+                } else if (frontierTiles.contains(neighbor.tiles)) {
+                    if (neighbor.costFromInitial > state.costFromInitial + 1) {
                         frontier.remove(neighbor);
                         neighbor.costFromInitial = state.costFromInitial + 1;
                         frontier.add(neighbor);
@@ -65,12 +65,16 @@ public class AStarSolver extends Solver{
                 }
             }
         }
+        if (frontier.size() == 0) {
+            System.out.println("Failure: No Solution");
+            System.out.println("Number of nodes expanded: " + explored.size());
+        }
     }
 
-    private double getHeuristicDistance(String currectTiles, String heuristic_type){
-        if(heuristic_type == "Manhattan"){
+    private double getHeuristicDistance(String currectTiles, String heuristic_type) {
+        if (heuristic_type == "Manhattan") {
             return getManhattanDistance(currectTiles);
-        }else if(heuristic_type == "Euclidean"){
+        } else if (heuristic_type == "Euclidean") {
             return getEuclideanDistance(currectTiles);
         }
         return 0;
