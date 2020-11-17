@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Stack;
 
-public class DFSSolver {
-    private State goal_state;
+public class DFSSolver extends Solver {
 
     public DFSSolver(State goal_state) {
-        this.goal_state = goal_state;
+        super(goal_state);
     }
 
-    public State solve(State initial_state) {
+    public void solve(State initial_state) {
         Stack<State> frontier = new Stack<State>();
         HashSet<String> frontierTiles = new HashSet<>();
         HashSet<String> explored = new HashSet<>();
@@ -26,7 +25,7 @@ public class DFSSolver {
             explored.add(state.tiles);
 
             if (state.tiles.equals(this.goal_state.tiles)) {
-                System.out.println("Success");
+                System.out.println("Number of nodes expanded: " + explored.size());
                 this.goal_state = state;
                 break;
             }
@@ -41,6 +40,5 @@ public class DFSSolver {
                 }
             }
         }
-        return this.goal_state;
     }
 }

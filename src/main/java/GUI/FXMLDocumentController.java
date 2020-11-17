@@ -11,13 +11,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-
+import DFS_solver.DFSSolver;
+import DFS_solver.Solver;
 import DFS_solver.State;
-import BFS_solver.BFSSolver;
 import java.io.IOException;
 import java.util.Stack;
+
+import AStar_solver.AStarSolver;
+import BFS_solver.BFSSolver;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -55,11 +57,13 @@ public class FXMLDocumentController implements Initializable {
         inital_state+=tile8.getText();
         inital_state+=tile9.getText();
         
-        System.err.println(inital_state);
         String tiles = "012345678";
-        BFSSolver solver = new BFSSolver(new State(tiles));
+        Solver solver = new BFSSolver(new State(tiles));
+        // Solver solver = new DFSSolver(new State(tiles));
+        // Solver solver = new AStarSolver(new State(tiles), "Manhattan");
+        // Solver solver = new AStarSolver(new State(tiles), "Manhattan");
         solver.solve(new State(inital_state));
-        Stack<State> moves = solver.get_moves(); 
+        Stack<String> moves = solver.get_path(); 
         System.out.println("Path cost: " + (moves.size() - 1));
         change_scene(event , moves);
         
@@ -71,7 +75,7 @@ public class FXMLDocumentController implements Initializable {
         tile1.setText("9");
     }    
     
-    public void change_scene(ActionEvent event ,  Stack<State> moves) throws IOException{
+    public void change_scene(ActionEvent event ,  Stack<String> moves) throws IOException{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("Solution.fxml"));
         Parent newView = loader.load();

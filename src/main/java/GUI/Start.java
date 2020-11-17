@@ -15,7 +15,7 @@ import javafx.stage.Stage;
  *
  * @author Lenovo
  */
-public class Solver extends Application {
+public class Start extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
