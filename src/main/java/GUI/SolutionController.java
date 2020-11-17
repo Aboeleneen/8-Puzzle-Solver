@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package solver;
 
+import DFS_solver.State;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -44,20 +45,21 @@ public class SolutionController implements Initializable {
     @FXML private Label moves_label ;
     @FXML private Text steps_label ;
     
-    private ArrayList<String> moves ;
+    private ArrayList<State> moves ;
     private int step = 0 ;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
      // TODO
+     
     }
     
-    public void set_moves(Stack<String> sol){
+    public void set_moves(Stack<State> sol){
         moves = new ArrayList<>();
         while(!sol.isEmpty())
         {
-            String move = sol.pop();
-            // System.out.println(move);
+            State move = sol.pop();
+            System.out.println(move);
             this.moves.add(move);
         }
         moves_label.setText(Integer.toString(this.moves.size()-1));
@@ -65,7 +67,7 @@ public class SolutionController implements Initializable {
     }
     
     private void set_tiles(){
-        String tiles = moves.get(step);
+        String tiles = moves.get(step).tiles;
         tile1.setText(Character.toString(tiles.charAt(0)));
         tile2.setText(Character.toString(tiles.charAt(1)));
         tile3.setText(Character.toString(tiles.charAt(2)));
@@ -88,6 +90,17 @@ public class SolutionController implements Initializable {
     private void handleNext(ActionEvent event) throws IOException {
         this.step = Math.min(moves.size()-1, step+1);
         set_tiles();
+    }
+    
+    @FXML
+    private void handleNew(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("FXMLDocument.fxml"));
+        Parent newView = loader.load();
+        Scene scene = new Scene(newView);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
     
 }
